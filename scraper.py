@@ -1,0 +1,51 @@
+from itertools import cycle
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+import random
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+from urllib.request import Request, urlopen
+import re
+
+req = Request('https://www.vegnonveg.com/footwear')
+
+html_page = urlopen(req)
+
+soup = BeautifulSoup(html_page, "lxml")
+
+links = []
+for link in soup.findAll('a'):
+    links.append(link.get('href'))
+
+print(len(links))
+
+
+baseurl = 'https://www.vegnonveg.com'
+
+# multiple user agents
+
+user_agents_list = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:53.0) Gecko/20100101 Firefox/53.0",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393"
+    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)"
+    "Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)"
+    "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)"
+    "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0; Trident/5.0;  Trident/5.0)"
+    "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0; MDDCJS)"
+
+]
+
+
+# k = requests.get('https://www.vegnonveg.com/footwear',
+#                  headers={'User-Agent': random.choice(user_agents_list)}, timeout=120).text
+
+# # print(k)
+
+# soup = BeautifulSoup(k, 'html.parser')
+
+# productlist = soup.find_all(
+#     'div', class_='info mt-10')
+
+# print(len(productlist))
