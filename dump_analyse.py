@@ -87,16 +87,14 @@ headers = {
 #     except Exception as e:
 #         print(i, e)
 
-# for i in list(dict.fromkeys(dump.crepdog)):
+# for i in list(dict.fromkeys(dump.mainstreet)):
+#     k = 'https://marketplace.mainstreet.co.in/' + i
 #     try:
-#         req = requests.get(i, headers=headers)
+#         req = requests.get(k, headers=headers)
 #         sk = bs(req.content, 'lxml')
-#         img = sk.find(
-#             'img', class_='Image--fadeIn lazyautosizes Image--lazyLoaded')
-#         new_snkr = Sneaker(name=sk.find('h1', class_='ProductMeta__Title Heading u-h2').text.strip().replace(
-#             '\n', ''), url=i, price=sk.find('span', class_='money').text.strip().replace('\n', ''), img=img)
+#         new_snkr = Sneaker(name=sk.find('h1', class_='product-single__title').text.strip().replace('\n', ''),url=k, price=sk.find('span', class_='product-single__price').text.strip().replace('\n', ''))
 #         new_size = ''
-#         sizes = sk.find('div', class_='Popover__ValueList').find_all('button')
+#         sizes = sk.find('select', class_='single-option-selector').find_all('option')
 #         for j in sizes:
 #             new_size = Size(size=j.text.strip(), sneaker=new_snkr.id)
 #             new_snkr.sizes.append(new_size)
@@ -106,22 +104,22 @@ headers = {
 #     except Exception as e:
 #         print(i, e)
 
-for i in list(dict.fromkeys(dump.mainstreet)):
-    k = 'https://marketplace.mainstreet.co.in/' + i
-    try:
-        req = requests.get(k, headers=headers)
-        sk = bs(req.content, 'lxml')
-        new_snkr = Sneaker(name=sk.find('h1', class_='product-single__title').text.strip().replace('\n', ''),url=k, price=sk.find('span', class_='product-single__price').text.strip().replace('\n', ''))
-        new_size = ''
-        sizes = sk.find('select', class_='single-option-selector').find_all('option')
-        for j in sizes:
-            new_size  = Size(size=j.text.strip(), sneaker=new_snkr.id)
-            new_snkr.sizes.append(new_size)
-            db.session.add(new_size)
-        db.session.add(new_snkr)
-        db.session.commit()
-    except Exception as e:
-        print(i, e)
+# for i in list(dict.fromkeys(dump.mainstreet)):
+#     k = 'https://marketplace.mainstreet.co.in/' + i
+#     try:
+#         req = requests.get(k, headers=headers)
+#         sk = bs(req.content, 'lxml')
+#         new_snkr = Sneaker(name=sk.find('h1', class_='product-single__title').text.strip().replace('\n', ''),url=k, price=sk.find('span', class_='product-single__price').text.strip().replace('\n', ''))
+#         new_size = ''
+#         sizes = sk.find('select', class_='single-option-selector').find_all('option')
+#         for j in sizes:
+#             new_size  = Size(size=j.text.strip(), sneaker=new_snkr.id)
+#             new_snkr.sizes.append(new_size)
+#             db.session.add(new_size)
+#         db.session.add(new_snkr)
+#         db.session.commit()
+#     except Exception as e:
+#         print(i, e)
 
 # for i in list(dict.fromkeys(dump.crepdog)):
 #     try:
@@ -142,15 +140,14 @@ class SearchForm(FlaskForm):
     query = StringField()
     submit = SubmitField('Search')
 
-
 @app.route('/', methods=['GET', 'POST'])
 def home():
     form = SearchForm()
-    snkr = 'ahaha'
+    snkr = Sneaker.query
     if form.validate_on_submit():
-        snkr = Sneaker.query.filter_by(name=form.query.data).first()
+        snkr = snkr.filter(Sneaker.name.like('%' + form.query.data + '%'))
+        snkr = snkr.order_by(Sneaker.price.asc()).all()
     return render_template('index.html', form=form, snkr=snkr)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
