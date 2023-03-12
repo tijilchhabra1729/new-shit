@@ -13,13 +13,18 @@
         {{form.query}}
         {{form.submit}}
     </form>
-    {{snkr.name}}<br>
+    <!-- {{snkr.name}}<br>
     {{snkr.price}}<br>
     {{snkr.url}}
     <img src="{{snkr.img}}" alt="">
     Sizes - <br>
     {% for size in snkr.sizes %}
         {{size.size}}
-    {% endfor %}
+    {% endfor %} -->
+   {% for snk in snkr %}
+    {{snk.name}} - {{snk.price}} <a href="{{snk.url}}"><button>Buy now</button></a>
+    <img src="{{snk.img}}" alt="">
+    <hr>
+   {% endfor %}
 </body>
 </html>
