@@ -16,10 +16,9 @@ user_agents_list = [
 
 ##### Web scrapper for infinite scrolling page #####
 driver = webdriver.Chrome()
-driver.get("https://marketplace.mainstreet.co.in/collections/jordans")
+driver.get("https://marketplace.mainstreet.co.in/collections/yeezy")
 time.sleep(2)  # Allow 2 seconds for the web page to open
 # You can set your own pause time. My laptop is a bit slow so I use 1 sec
-scroll_pause_time = 3
 screen_height = driver.execute_script(
     "return window.screen.height;")   # get the screen height of the web
 i = 1
@@ -29,7 +28,6 @@ while True:
     driver.execute_script(
         "window.scrollTo(0, {screen_height}*{i});".format(screen_height=screen_height, i=i))
     i += 1
-    time.sleep(scroll_pause_time)
     # update scroll height each time after scrolled, as the scroll height can change after we scrolled the page
     scroll_height = driver.execute_script("return document.body.scrollHeight;")
     # Break the loop when the height we need to scroll to is larger than the total scroll height
@@ -37,9 +35,11 @@ while True:
         break
 
 ##### Extract Reddit URLs #####
-jordan = []
+# jordan = []
+yeezy = []
 soup = BeautifulSoup(driver.page_source, "html.parser")
 for link in soup.findAll('a', class_="spf-product-card__image-wrapper"):
-    jordan.append(link.get('href'))
+    yeezy.append(link.get('href'))
 
-print(jordan)
+# print(jordan)
+print(yeezy)
