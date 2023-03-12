@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/" method="post">
+        {{form.hidden_tag()}}
+        {{form.csrf_token}}
+        {{form.query}}
+        {{form.submit}}
+    </form>
+    {{snkr.name}}<br>
+    {{snkr.price}}<br>
+    {{snkr.url}}
+    <img src="{{snkr.img}}" alt="">
+    Sizes - <br>
+    {% for size in snkr.sizes %}
+        {{size.size}}
+    {% endfor %}
+</body>
+</html>
