@@ -96,22 +96,38 @@ headers = {
 #     except Exception as e:
 #         print(i, e)
 
+for i in list(dict.fromkeys(dump.mainstreet)):
+        k = 'https://marketplace.mainstreet.co.in/' + i
+    # try:
+        req = requests.get(k, headers=headers)
+        sk = bs(req.content, 'lxml')
+        print(sk.find('h1', class_='product-single__title').text.strip().replace('\n', ''))
+        # new_snkr = Sneaker(name=sk.find('h1', class_='product-single__title').text.strip().replace('\n', ''),url=k, price=sk.find('span', class_='product-single__price').text.strip().replace('\n', ''))
+        # new_size = ''
+        # sizes = sk.find('select', class_='single-option-selector').find_all('option')
+        # for j in sizes:
+        #     new_size  = Size(size=j.text.strip(), sneaker=new_snkr.id)
+        #     new_snkr.sizes.append(new_size)
+        #     db.session.add(new_size)
+        # db.session.add(new_snkr)
+        # db.session.commit()
+    # except Exception as e:
+    #     print(i, e)
+
 # for i in list(dict.fromkeys(dump.mainstreet)):
 #     k = 'https://marketplace.mainstreet.co.in/' + i
 #     try:
 #         req = requests.get(k, headers=headers)
 #         sk = bs(req.content, 'lxml')
-#         new_snkr = Sneaker(name=sk.find('h1', class_='product-single__title').text.strip().replace('\n', ''),url=k, price=sk.find('span', class_='product-single__price').text.strip().replace('\n', ''))
-#         new_size = ''
-#         sizes = sk.find('select', class_='single-option-selector').find_all('option')
-#         for j in sizes:
-#             new_size  = Size(size=j.text.strip(), sneaker=new_snkr.id)
-#             new_snkr.sizes.append(new_size)
-#             db.session.add(new_size)
-#         db.session.add(new_snkr)
-#         db.session.commit()
+#         print(sk.find('h1', class_='product-single__title'))
+#         print(sk.find('h1', class_='product-single__title'))
+#         # new_snkr = sk.find('h1', class_='product-single__title').text.strip().replace('\n', '')
+#         # snkrs = Sneaker.query.filter(Sneaker.name.like('%' + new_snkr + '%')).all()
+#         # print(snkrs)
 #     except Exception as e:
 #         print(i, e)
+
+
 
 # for i in list(dict.fromkeys(dump.crepdog)):
 #     try:
