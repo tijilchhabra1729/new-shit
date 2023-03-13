@@ -32,30 +32,34 @@
 #     'div', {'class': 'spf-product__info'})
 
 # print(productlist)
-
 from requests_html import HTMLSession
-
-links = ['https://marketplace.mainstreet.co.in/collections/sneakers/products/air-jordan-1-low-university-gold-white',
-         'https://marketplace.mainstreet.co.in/collections/sneakers/products/wmns-air-jordan-1-retro-low-og-black-dark-powder-blue']
+from dump import mainstreet
 
 
 def get_stuff(url):
     s = HTMLSession()
     r = s.get(url)
-    r.html.render(sleep=1)
+    r.html.render(sleep=1, timeout=20)
 
-    product = {
-        'title': r.html.xpath('''//*[@id="ProductSection"]/div[2]/div/div[2]/h1''', first=True).text,
-        'price': r.html.xpath('''//*[@id="ProductPrice"]''', first=True).text
-    }
+    name = r.html.xpath('''//*[@id="ProductSection"]/div[2]/div/div[2]/h1''', first=True).text
+    price = r.html.xpath('''//*[@id="ProductPrice"]''', first=True).text
+    sizes = r.html.xpath('''//*[@id="ProductSelect-product-template-option-0"]/option''')
+    
+    # print(sizes)
+    return name, price, sizes
 
-    print(product)
-    return product
+info = get_stuff('https://marketplace.mainstreet.co.in/collections/jordans/products/trophy-room-x-air-jordan-1-retro-high-og-sp-chicago-friends-family')[2]
+
+for i in info:
+    print(i.text)
 
 
-price = []
+# for i in mainstreet:
+#     try:
+#         info = get_stuff('https://marketplace.mainstreet.co.in' + i)
+#         print('name-', info[0])
+#         print('price-', info[1])
+#         print(info[3])
+#     except Exception as e:
+#         print(i, e)
 
-for i in links:
-    price.append(get_stuff(i))
-
-print(price)

@@ -96,12 +96,12 @@ headers = {
 #     except Exception as e:
 #         print(i, e)
 
-for i in list(dict.fromkeys(dump.mainstreet)):
-        k = 'https://marketplace.mainstreet.co.in/' + i
-    # try:
-        req = requests.get(k, headers=headers)
-        sk = bs(req.content, 'lxml')
-        print(sk.find('h1', class_='product-single__title').text.strip().replace('\n', ''))
+# for i in list(dict.fromkeys(dump.mainstreet)):
+#         k = 'https://marketplace.mainstreet.co.in/' + i
+#     # try:
+#         req = requests.get(k, headers=headers)
+#         sk = bs(req.content, 'lxml')
+#         print(sk.find('h1', class_='product-single__title').text.strip().replace('\n', ''))
         # new_snkr = Sneaker(name=sk.find('h1', class_='product-single__title').text.strip().replace('\n', ''),url=k, price=sk.find('span', class_='product-single__price').text.strip().replace('\n', ''))
         # new_size = ''
         # sizes = sk.find('select', class_='single-option-selector').find_all('option')
@@ -113,6 +113,37 @@ for i in list(dict.fromkeys(dump.mainstreet)):
         # db.session.commit()
     # except Exception as e:
     #     print(i, e)
+
+from requests_html import HTMLSession
+from dump import mainstreet
+
+
+def get_stuff(url):
+    s = HTMLSession()
+    r = s.get(url)
+    r.html.render(sleep=1, timeout=100)
+
+    name = r.html.xpath('''//*[@id="ProductSection"]/div[2]/div/div[2]/h1''', first=True).text
+    price = r.html.xpath('''//*[@id="ProductPrice"]''', first=True).text
+    sizes = r.html.xpath('''//*[@id="ProductSelect-product-template-option-0"]/option''')
+    # print(sizes)
+    return name, price, sizes
+
+
+for i in mainstreet:
+    j = 'https://marketplace.mainstreet.co.in/' + i
+    try:
+        info = get_stuff(j)
+        new_snkr = Sneaker(name=info[0], price=info[1], url=j)
+        for i in info[2]:
+            new_size = Size(size=i.text, sneaker=new_snkr.id)
+            new_snkr.sizes.append(new_size)
+            db.session.add(new_size)
+        db.session.add(new_snkr)
+        db.session.commit()
+        print(f'added sizes {info[2]} and sneaker {info[0]}')
+    except Exception as e:
+        print(j,e)
 
 # for i in list(dict.fromkeys(dump.mainstreet)):
 #     k = 'https://marketplace.mainstreet.co.in/' + i
@@ -143,18 +174,18 @@ for i in list(dict.fromkeys(dump.mainstreet)):
 
 
 
-class SearchForm(FlaskForm):
-    query = StringField()
-    submit = SubmitField('Search')
+# class SearchForm(FlaskForm):
+#     query = StringField()
+#     submit = SubmitField('Search')
 
-@app.route('/', methods=['GET', 'POST'])
-def home():
-    form = SearchForm()
-    snkr = Sneaker.query
-    if form.validate_on_submit():
-        snkr = snkr.filter(Sneaker.name.like('%' + form.query.data + '%'))
-        snkr = snkr.order_by(Sneaker.price.asc()).all()
-    return render_template('index.html', form=form, snkr=snkr)
+# @app.route('/', methods=['GET', 'POST'])
+# def home():
+#     form = SearchForm()
+#     snkr = Sneaker.query
+#     if form.validate_on_submit():
+#         snkr = snkr.filter(Sneaker.name.like('%' + form.query.data + '%'))
+#         snkr = snkr.order_by(Sneaker.price.asc()).all()
+#     return render_template('index.html', form=form, snkr=snkr)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)

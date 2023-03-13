@@ -51,4 +51,4 @@ for i in sneakers:
 
 
 # print(jordan)
-print(urls)
+print(len(urls))
