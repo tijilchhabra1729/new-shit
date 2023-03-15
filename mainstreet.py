@@ -35,23 +35,18 @@
 from requests_html import HTMLSession
 from dump import mainstreet
 
+s = HTMLSession()
 
 def get_stuff(url):
-    s = HTMLSession()
     r = s.get(url)
     r.html.render(sleep=1, timeout=20)
 
-    name = r.html.xpath('''//*[@id="ProductSection"]/div[2]/div/div[2]/h1''', first=True).text
-    price = r.html.xpath('''//*[@id="ProductPrice"]''', first=True).text
-    sizes = r.html.xpath('''//*[@id="ProductSelect-product-template-option-0"]/option''')
+    print(r.html)
+    # price = r.html.xpath('''/html/body/div[2]/div[3]/div[1]/div[2]/div[2]/div[1]/p[4]/span''', first=True).text
+    # sizes = r.html.xpath('''/html/body/div[2]/div[3]/div[1]/div[2]/div[2]/div[1]/form/div[3]/div/div[1]/div/ul/li''') 
     
-    # print(sizes)
-    return name, price, sizes
-
-info = get_stuff('https://marketplace.mainstreet.co.in/collections/jordans/products/trophy-room-x-air-jordan-1-retro-high-og-sp-chicago-friends-family')[2]
-
-for i in info:
-    print(i.text)
+    # print(sizes) 
+get_stuff('https://www.vegnonveg.com/products/w-blazer-low-77-jumbo-whitemalachite-university-blue')
 
 
 # for i in mainstreet:

@@ -114,36 +114,36 @@ headers = {
     # except Exception as e:
     #     print(i, e)
 
-from requests_html import HTMLSession
-from dump import mainstreet
+# from requests_html import HTMLSession
+# from dump import mainstreet
 
 
-def get_stuff(url):
-    s = HTMLSession()
-    r = s.get(url)
-    r.html.render(sleep=1, timeout=100)
+# def get_stuff(url):
+#     s = HTMLSession()
+#     r = s.get(url)
+#     r.html.render(sleep=1, timeout=100)
 
-    name = r.html.xpath('''//*[@id="ProductSection"]/div[2]/div/div[2]/h1''', first=True).text
-    price = r.html.xpath('''//*[@id="ProductPrice"]''', first=True).text
-    sizes = r.html.xpath('''//*[@id="ProductSelect-product-template-option-0"]/option''')
-    # print(sizes)
-    return name, price, sizes
+#     name = r.html.xpath('''//*[@id="ProductSection"]/div[2]/div/div[2]/h1''', first=True).text
+#     price = r.html.xpath('''//*[@id="ProductPrice"]''', first=True).text
+#     sizes = r.html.xpath('''//*[@id="ProductSelect-product-template-option-0"]/option''')
+#     # print(sizes)
+#     return name, price, sizes
 
 
-for i in mainstreet:
-    j = 'https://marketplace.mainstreet.co.in/' + i
-    try:
-        info = get_stuff(j)
-        new_snkr = Sneaker(name=info[0], price=info[1], url=j)
-        for i in info[2]:
-            new_size = Size(size=i.text, sneaker=new_snkr.id)
-            new_snkr.sizes.append(new_size)
-            db.session.add(new_size)
-        db.session.add(new_snkr)
-        db.session.commit()
-        print(f'added sizes {info[2]} and sneaker {info[0]}')
-    except Exception as e:
-        print(j,e)
+# for i in mainstreet:
+    # j = 'https://marketplace.mainstreet.co.in/' + i
+    # try:
+    #     info = get_stuff(j)
+    #     new_snkr = Sneaker(name=info[0], price=info[1], url=j)
+    #     for i in info[2]:
+    #         new_size = Size(size=i.text, sneaker=new_snkr.id)
+    #         new_snkr.sizes.append(new_size)
+    #         db.session.add(new_size)
+    #     db.session.add(new_snkr)
+    #     db.session.commit()
+    #     print(f'added sizes {info[2]} and sneaker {info[0]}')
+    # except Exception as e:
+    #     print(j,e)
 
 # for i in list(dict.fromkeys(dump.mainstreet)):
 #     k = 'https://marketplace.mainstreet.co.in/' + i
@@ -174,18 +174,24 @@ for i in mainstreet:
 
 
 
-# class SearchForm(FlaskForm):
-#     query = StringField()
-#     submit = SubmitField('Search')
+class SearchForm(FlaskForm):
+    query = StringField()
+    submit = SubmitField('Search')
 
-# @app.route('/', methods=['GET', 'POST'])
-# def home():
-#     form = SearchForm()
-#     snkr = Sneaker.query
-#     if form.validate_on_submit():
-#         snkr = snkr.filter(Sneaker.name.like('%' + form.query.data + '%'))
-#         snkr = snkr.order_by(Sneaker.price.asc()).all()
-#     return render_template('index.html', form=form, snkr=snkr)
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    form = SearchForm()
+    shoes = []
+    if form.validate_on_submit():
+        # snkr = snkr.filter(Sneaker.name.like('%' + form.query.data + '%'))
+        # snkr = snkr.order_by(Sneaker.price.asc()).all()
+        snkrs = Sneaker.query.order_by(Sneaker.price.asc()).all()
+        for i in snkrs:
+            
+            if i.name.lower().find(form.query.data.lower()) != -1:
+                if i not in shoes:
+                    shoes.append(i)
+    return render_template('index.html', form=form, shoes=list(dict.fromkeys(shoes)))
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)

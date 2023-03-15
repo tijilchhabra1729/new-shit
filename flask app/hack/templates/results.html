@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}
+    Search
+{% endblock %}
+{% block content %}
+<div class="h-56 mx-10  mt-10  ">
+    <div class="h-1/2 bg-[#a18167] rounded-xl flex flex-cols justify-center ">
+        <div class="w-96 bg-[#cdb891] h-16 mt-20 rounded-full flex flex-cols  text-xl justify-center items-center ">
+            Showing Results For : '{{query}}'</div>
+    </div>
+
+</div>
+<Div class="flex flex-cols justify-center items-center">
+<div class="flex flex-cols  mx-32 gap-10">
+    {% for shoe in shoes[:6] %}
+    <div class="grid grid-rows text-2xl "><div class="h-56 w-56 bg-[#a18167] rounded-xl"><img src="{{shoe.img}}" alt="" class="h-full w-full rounded-full" srcset=""></div><h1 class="ml-5" title="{{shoe.name}}">{{shoe.name.title()[:25]}}...</h1><button
+    class="h-10 w-40 bg-[#a18167] ml-10 mt-5  rounded-full text-white text-xl">Explore</button></div>
+    {% endfor %}
+</div>
+</Div>
+{% endblock %}
