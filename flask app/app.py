@@ -11,17 +11,46 @@ create_db(app)
 @app.route('/')
 def home():
     form = SearchForm()
-    sneakers = Sneaker.query.all()
-    for i in sneakers:
-        i.price = i.price.replace(' ', '').replace(',', '')
-        db.session.add(i)
-        db.session.commit()
+    # sneakers = Sneaker.query.all()
+    # for i in sneakers:
+    #     i.price = i.price.replace(' ', '').replace(',', '')
+    #     db.session.add(i)
+    #     db.session.commit()
+    # sneakers = Sneaker.query.all()
+    # sneakers = [*set(sneakers)]
+    # db.session.add(sneakers)
+    # db.session.commit()
+    # shoes = []
+    # sneakers = Sneaker.query.all()
+    # # for i in sneakers:
+    # #     if i not in shoes:
+    # #         shoes.append(i)
+    # # print(len(shoes))
+    # sk = sneakers[:447]
+    # dup_names = []
+    # for i in sk:
+    # #     print(len(list(dict.fromkeys(sk))))
+    # unique_sneakers = []
+    # sneakers = Sneaker.query.all()
+    # for i in sneakers:
+    #     if i.name not in unique_sneakers:
+    #         unique_sneakers.append(i.name)
+    #     else:
+    #         sneaker = Sneaker.query.filter_by(name=i.name).first()
+    #         db.session.delete(sneaker)
+    #         db.session.commit()
     return render_template('index.html', form=form)
 
-@app.route('/product')
-def product():
+@app.route('/products/<id>')
+def product(id):
     form = SearchForm()
-    return render_template('product.html', form=form)
+    product = Sneaker.query.filter_by(id=id).first()
+    return render_template('product.html', form=form, product=product)
+
+@app.route('/search', methods=['GET', 'POST'])
+def search_main():
+    form = SearchForm()
+    return redirect(url_for('search', query=form.query.data))
 
 @app.route('/search/<query>', methods=['GET', 'POST'])
 def search(query):
@@ -30,11 +59,11 @@ def search(query):
     snkrs = Sneaker.query.order_by(Sneaker.price.asc()).all()
     for i in snkrs:
         if i.name.lower().find(query.lower()) != -1:
-            if i.name not in shoes:
+            if i not in shoes:
                 shoes.append(i)
             else:
                 print('err')
-    return render_template('results.html', shoes=list(dict.fromkeys(shoes)), query=query, form=form)
+    return render_template('results.html', shoes=shoes, query=query, form=form)
 
 @app.route('/reg', methods=['GET', 'POST'])
 def reg():

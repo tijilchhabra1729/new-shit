@@ -1,10 +1,10 @@
-from app import db, create_db
-from dump import mainstreet, dawntown, superkicks, crepdog
+# from app import db, create_db
+# from dump import mainstreet, dawntown, superkicks, crepdog
 # from hack.models import Sneaker, Company, Size, Price
 import sqlite3
-from functools import reduce
+# from functools import reduce
 
-conn = sqlite3.connect('sneaker_db.sqlite')
+conn = sqlite3.connect('hack/sneaker_db.sqlite')
 cur = conn.cursor()    
 # cur.execute('SELECT name FROM sneaker')
 # all_sneakers = list(dict.fromkeys(cur.fetchall()))
@@ -45,14 +45,7 @@ cur.execute("SELECT * FROM sneaker \
 # fetch duplicate rows and display them
 print('Duplicate Rows:')              
 for i in cur.fetchall():
-   query = "DELETE FROM sneaker WHERE name = '?'"
-   query.replace('?', i[1])
-   cur.execute(query)
-   print('donee')
-
-
-
-# cur.executemany("DELETE FROM sneaker WHERE name = '?'",)
-
+   print(i)
+# terminate connection
 
     

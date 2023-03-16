@@ -12,10 +12,23 @@
 </div>
 <Div class="flex flex-cols justify-center items-center">
 <div class="flex flex-cols  mx-32 gap-10">
-    {% for shoe in shoes[:6] %}
-    <div class="grid grid-rows text-2xl "><div class="h-56 w-56 bg-[#a18167] rounded-xl"><img src="{{shoe.img}}" alt="" class="h-full w-full rounded-full" srcset=""></div><h1 class="ml-5" title="{{shoe.name}}">{{shoe.name.title()[:25]}}...</h1><button
-    class="h-10 w-40 bg-[#a18167] ml-10 mt-5  rounded-full text-white text-xl">Explore</button></div>
+    {% for shoe in shoes[:6]%}
+    <div class="grid grid-rows text-2xl "><div class="h-56 w-56 bg-[#a18167] rounded-xl"><img src="{{shoe.img}}" alt="" class="h-full object-cover w-full rounded-xl" srcset=""></div><h1 class="ml-5" title="{{shoe.name}}" id="shoe">{{shoe.name.title()[:25]}}...</h1><a href="/products/{{shoe.id}}"><button
+        class="h-10 w-40 bg-[#a18167] ml-10 mt-5  rounded-full text-white text-xl">Explore</button></a></div>
     {% endfor %}
+
 </div>
+
 </Div>
+<div class="flex flex-col items-center mt-8">
+    <button
+        class="h-10 w-40 justify-center bg-[#a18167] ml-10 mt-5  rounded-full text-white text-xl" id="load">Load More</button>
+</div>
+<script>
+   const btn = document.getElementById('load')
+   let shoe = document.getElementById('shoe')
+   btn.addEventListener('click', function(){
+    console.log(`{{shoes.index('')}}`)
+   })
+</script>
 {% endblock %}

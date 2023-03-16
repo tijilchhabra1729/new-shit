@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap" rel="stylesheet">
     <title>{% block title %}
       
-    {% endblock %} | SoleSavings</title>
+    {% endblock %} | Sole Savings</title>
     <script src="https://kit.fontawesome.com/c416e79406.js" crossorigin="anonymous"></script>
   
 
@@ -28,7 +28,7 @@
 <nav class="    w-full flex relative justify-between items-center mx-auto px-8 h-20">
     <!-- logo -->
     <div class="inline-flex text-3xl">
-        <a class="" href="#"
+        <a class="" href="/"
             >Sole Savings
         </a>
     </div>
@@ -36,36 +36,12 @@
     <!-- end logo -->
 
     <!-- search bar -->
-    <div class="hidden sm:block flex-shrink flex-grow-0 justify-start px-2">
+    <div class="sm:block hidden flex-shrink flex-grow-0 justify-start px-2">
         <div class="inline-block">
             <div class="inline-flex items-center max-w-full">
-                <button class="flex items-center flex-grow-0 flex-shrink pl-2 relative w-60 border border-[#a18167] rounded-full px-1  py-1" type="button">
-                    <input class="block flex-grow flex-shrink overflow-hidden bg-[#faf0e6] rounded-full h-full w-60 p-1"></input>
-                    <div class="flex items-center justify-center relative  h-8 w-8 rounded-full">
-                        <svg
-                            viewBox="0 0 32 32"
-                            xmlns="http://www.w3.org/2000/svg"
-                            aria-hidden="true"
-                            role="presentation"
-                            focusable="false"
-                            style="
-                                display: block;
-                                fill: none;
-                                height: 12px;
-                                width: 12px;
-                                stroke: currentcolor;
-                                stroke-width: 5.33333;
-                                overflow: visible;
-                            "
-                        >
-                            <g fill="none">
-                                <path
-                                    d="m13 24c6.0751322 0 11-4.9248678 11-11 0-6.07513225-4.9248678-11-11-11-6.07513225 0-11 4.92486775-11 11 0 6.0751322 4.92486775 11 11 11zm8-3 9 9"
-                                ></path>
-                            </g>
-                        </svg>
-                    </div>
-                </button>
+                <button class="flex items-center flex-grow-0 flex-shrink pl-2 relative w-auto border border-[#a18167] rounded-full py-1 px-1" type="button">
+                    <form action="/search" method="post"><div class="flex flex-cols">{{form.query(class='block flex-grow flex-shrink overflow-hidden bg-[#faf0e6] rounded-full h-full w-full p-1')}}{{form.submit(class='bg-[#a18167] text-[#faf0e6] rounded-full h-full w-20 p-1 bg-[#C8AD7F] px-1 py-1')}}
+                    </button></form>
             </div>
         </div>
     </div>
@@ -135,23 +111,22 @@
             <div class="sm:block flex-shrink flex-grow-0 justify-start px-2">
                 <div class="inline-block">
                     <div class="inline-flex items-center max-w-full">
-                        <button class="flex items-center flex-grow-0 flex-shrink pl-2 relative w-60 border border-[#a18167] rounded-full px-1  py-1" type="button">
-                            <form action="/search/{{form.query.data}}" method="post"><div class="flex flex-cols">{{form.query(class='block flex-grow flex-shrink overflow-hidden bg-[#faf0e6] rounded-full h-full w-60 p-1 mr-12')}}
-    {{form.submit(class='overflow-hidden bg-[#faf0e6] rounded-full h-full w-60 p-1 bg-[#C8AD7F]')}}</form>
-                        </button>
+                        <button class="flex items-center flex-grow-0 flex-shrink pl-2 relative w-auto border border-[#a18167] rounded-full py-1 px-1" type="button">
+                            <form action="/search" method="post"><div class="flex flex-cols">{{form.query(class='block flex-grow flex-shrink overflow-hidden bg-[#faf0e6] rounded-full h-full w-full p-1')}}{{form.submit(class='bg-[#a18167] text-[#faf0e6] rounded-full h-full w-20 p-1 bg-[#C8AD7F] px-1 py-1')}}
+                            </button></form>
                     </div>
                 </div>
             </div>
-            <a href="#">
+            <a href="/">
                 <h1 class="lg:text-9xl text-6xl hover:bg-[#C8AD7F] hover:text-[#faf0e6]">Home</h1>
             </a>
-             <a href="#">
+             <a href="/about">
                 <h1 class="lg:text-9xl text-6xl hover:bg-[#C8AD7F] hover:text-[#faf0e6]">About</h1>
             </a>
-             <a href="#">
+             <a href="/explore">
                 <h1 class="lg:text-9xl text-6xl hover:bg-[#C8AD7F] hover:text-[#faf0e6]">Explore</h1>
             </a>
-             <a href="#">
+             <a href="/contact">
                 <h1 class="lg:text-9xl text-6xl hover:bg-[#C8AD7F] hover:text-[#faf0e6]">Contact</h1>
             </a>
 

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-    {{product.title}}
+    {{product.name}}
 {% endblock %}
 {% block content %}
 <div class="flex flex-cols">
@@ -9,7 +9,7 @@
 
         </div>
         <div class="h-full flex flex-cols justify-center items-center">
-            <img src="shoe.png" class="absolute h-[25vw] ml-32 rotate-[20deg] mb-32">
+            <img src="{{product.img}}" class="absolute h-[25vw] rounded-full ml-32 rotate-[20deg] mb-32">
         </div>
 
     </div>
@@ -17,27 +17,21 @@
     <div class="w-1/2 mt-10">
         <div class="flex justify-end absolute">
             <div class="grid grid-rows">
-                <div class="text-[3vw]  text-justify  mr-20">WMNS AIR FORCE 1 '07 'SANDDRIFT/COCONUT MILK-WHITE-WOLF
-                    GREY'</div>
+                <div class="text-[3vw]  text-justify  mr-20">{{product.name}}</div>
                 <div class="h-56 mr-20 bg-[#cdb891]  mt-10 rounded-[25px]">
                     <div class="flex flex-cols justify-center items-center">
-                        <h1 class="text-2xl mt-5">Best Price Available at</h1>
+                        <h1 class="text-2xl mt-5">Available at</h1>
                     </div>
                     <div class="grid grid-rows">
                         <div class="flex flex-cols items-center">
-                            <h1 class="text-xl mt-5 ml-10 ">VegNonVeg.com - ₹8,195.00 </h1> <button
+                            <h1 class="text-xl mt-5 ml-10 ">Rs. {{product.price}}</h1> <a href="{{product.url}}"><button
                                 class="h-10 w-40 bg-[#a18167] mt-5 ml-32 rounded-full text-white text-xl">Buy
-                                Now</button>
-                        </div>
-                        <div class="flex flex-cols items-center">
-                            <h1 class="text-xl mt-5 ml-10 ">Superkicks.com - ₹10,795.00 </h1> <button
-                                class="h-10 w-40 bg-[#a18167] mt-5 ml-32 rounded-full text-white text-xl">Buy
-                                Now</button>
+                                Now</button></a>
                         </div>
                         <div class="flex flex-cols gap-5 mt-20 mr-10 ml-[56px]">
-                            <div class="h-40 w-40 rounded-[40px] border-2 border-black bg-white"><img src="https://images.vegnonveg.com/resized/700X573/9079/wmns-air-force-1-07-sanddriftcoconut-milk-white-wolf-grey-640dda98ef20a.jpg" class="p-2.5 mt-2  rounded-[40px]"></div>
-                            <div class="h-40 w-40 rounded-[40px] border-2 border-black bg-white"><img src="https://images.vegnonveg.com/resized/700X573/9079/wmns-air-force-1-07-sanddriftcoconut-milk-white-wolf-grey-640dda98ef20a.jpg" class="p-2.5 mt-2  rounded-[40px]"></div>
-                            <div class="h-40 w-40 rounded-[40px] border-2 border-black bg-white"><img src="https://images.vegnonveg.com/resized/700X573/9079/wmns-air-force-1-07-sanddriftcoconut-milk-white-wolf-grey-640dda98ef20a.jpg" class="p-2.5 mt-2  rounded-[40px]"></div>
+                            <div class="h-40 w-40 rounded-[40px] border-2 border-black bg-white"><img src="{{product.img}}" class="p-2.5 mt-2  rounded-[40px]"></div>
+                            <div class="h-40 w-40 rounded-[40px] border-2 border-black bg-white"><img src="{{product.img}}" class="p-2.5 mt-2  rounded-[40px]"></div>
+                            <div class="h-40 w-40 rounded-[40px] border-2 border-black bg-white"><img src="{{product.img}}" class="p-2.5 mt-2  rounded-[40px]"></div>
                             
                         </div>
                     </div>

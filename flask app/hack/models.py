@@ -18,12 +18,12 @@ class Sneaker(db.Model):
     price = db.Column(db.String)
     url = db.Column(db.String)
     img = db.Column(db.String)
-    sizes = db.relationship('Size', backref='sneaker')
+    sizes = db.relationship('Size')
 
 class Size(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     size = db.Column(db.Integer)
-    snkr = db.Column(db.Integer, db.ForeignKey('sneaker.id'))
+    sneaker = db.Column(db.Integer, db.ForeignKey('sneaker.id'))
     
 # class Company(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
