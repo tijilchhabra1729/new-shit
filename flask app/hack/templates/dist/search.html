@@ -1,0 +1,18 @@
+{% extends 'dist/base.html' %}
+{% block title %}
+    Search
+{% endblock %}
+{% block content %}
+<div class="flex flex-cols justify-center items-center h-screen " style="font-family: 'Tilt Neon', cursive;">
+    <div class="text-[13vw] text-red-200 lg:md:block hidden">FIND YOUR KICKS</div>
+    <div class="lg:md:flex lg:md:flex-cols lg:md:gap-10  gap-5 grid grid-rows flex flex-cols justify-center items-center absolute">
+        <form action="/sendsearch" method="post">
+            {{form.hidden_tag()}}
+            {{form.csrf_token}}
+            {{form.query(class='h-12 backdrop-blur-sm bg-white lg:md:w-[50vw] w-[70vw] border-2 border-black rounded-full p-5 text-xl', placeholder='We are listening...')}}
+            <div class="flex flex-cols justify-center items-center">
+                {{form.submit(class='h-12 w-40 bg-black text-white text-xl flex flex-cols justify-center items-center rounded-full')}}</div>
+        </form>
+    </div>
+</div>
+{% endblock %}

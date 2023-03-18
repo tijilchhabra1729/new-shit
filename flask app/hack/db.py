@@ -27,13 +27,14 @@ def convert_tuple(t):
 # #             print(convert_tuple(all_sneakers[j]))
 # #             print(convert_tuple(all_sneakers[i]) + '\n')
 
+# all_sneakers 
 
 # for i in range(len(all_sneakers)):
 #         for j in range(i + 1, len(all_sneakers)):
 #             for k in range(j+1, len(all_sneakers)):
 #                 if convert_tuple(all_sneakers[j]).find(convert_tuple(all_sneakers[i])) != -1 or convert_tuple(all_sneakers[i]).find(convert_tuple(all_sneakers[j])) != -1:
 #                     print(convert_tuple(all_sneakers[j]))
-#                     print(convert_tuple(all_sneakers
+#                     print(convert_tuple(all_sneakers)
             
         
 # # reduce(all_sneakers)

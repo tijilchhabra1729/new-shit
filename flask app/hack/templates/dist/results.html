@@ -1,0 +1,22 @@
+{% extends 'dist/base.html' %}
+{% block title %}
+    Results for {{query}}
+{% endblock %}
+{% block content %}
+    <div class="h-56 mx-10  mt-10  ">
+        <div class="h-1/2 bg-gray-300 rounded-xl flex flex-cols justify-center lg:md:block hidden" style="font-family: 'Tilt Neon', cursive;">
+            <div class="w-96 bg-gray-500 text-white h-16 mt-20 rounded-full flex flex-cols lg:md:text-xl  justify-center items-center text-[4vw] ">
+                Showing {{shoes|length}} results for '{{query}}'.</div>
+        </div>
+   
+        <Div class="flex flex-cols justify-center items-center mt-32">
+            <div class="grid lg:grid-cols-5 grid-rows lg:gap-10 gap-5">
+                {% for shoe in shoes %}
+                <div class="grid grid-rows text-2xl ">
+                    <div class="h-56 w-56 bg-gray-300 rounded-xl"><img src="{{shoe.img}}" alt="" srcset=""></div>
+                    <h1 class="ml-5" title="{{shoe.name.title()}}">{{shoe.name.title()[:25]}}...</h1>
+                    <h1 class="ml-5">{{shoe.price}}</h1><a href="{{shoe.url}}"><button
+                        class="h-10 w-40 bg-gray-300 ml-10 mt-5  rounded-full text-black text-xl">Buy</button></a>
+                </div>
+                {% endfor %}
+{% endblock %}

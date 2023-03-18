@@ -14,5 +14,5 @@ class RegForm(FlaskForm):
     submit = SubmitField("Register")
     
 class SearchForm(FlaskForm):
-    query = StringField()
+    query = StringField(validators=[DataRequired()])
     submit = SubmitField('Search')

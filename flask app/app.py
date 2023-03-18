@@ -39,7 +39,7 @@ def home():
     #         sneaker = Sneaker.query.filter_by(name=i.name).first()
     #         db.session.delete(sneaker)
     #         db.session.commit()
-    return render_template('index.html', form=form)
+    return render_template('dist/index.html', form=form)
 
 @app.route('/products/<id>')
 def product(id):
@@ -50,6 +50,11 @@ def product(id):
 @app.route('/search', methods=['GET', 'POST'])
 def search_main():
     form = SearchForm()
+    return render_template('dist/search.html', form=form)
+
+@app.route('/sendsearch', methods=['GET', 'POST'])
+def send_search():
+    form = SearchForm()
     return redirect(url_for('search', query=form.query.data))
 
 @app.route('/search/<query>', methods=['GET', 'POST'])
@@ -58,14 +63,15 @@ def search(query):
     form = SearchForm()
     snkrs = Sneaker.query.order_by(Sneaker.price.asc()).all()
     for i in snkrs:
-        if i.name.lower().find(query.lower()) != -1:
+        if i.name.lower().replace('&', 'and').find(query.lower().replace('&', 'and')) != -1:
             if i not in shoes:
                 shoes.append(i)
             else:
                 print('err')
-    return render_template('results.html', shoes=shoes, query=query, form=form)
+    return render_template('dist/results.html', shoes=shoes, query=query, form=form)
+        
 
-@app.route('/reg', methods=['GET', 'POST'])
+@app.route('/signup', methods=['GET', 'POST'])
 def reg():
     form = RegForm()
     mess=''
@@ -73,32 +79,34 @@ def reg():
         email = form.email.data
         username = form.username.data
         password = form.password.data
-        user = User.query.filter_by(email=email).first()
-        if user:
-            mess = 'Account already exists'
-        else:
+        email_chk = User.query.filter_by(email=email).first()
+        username_chk = User.query.filter_by(username=email).first()
+        if email_chk or username_chk:
+            mess = 'An account already exists with this email and/or username.'
+        else:  
             new_user = User(email=email, username=username, password=generate_password_hash(password))
             db.session.add(new_user)
             db.session.commit()
-    return render_template('reg.html', form=form, mess=mess)
+            login_user(new_user)
+            return redirect(url_for('home'))
+    return render_template('dist/register.html', form=form, mess=mess)
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/signin', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     mess=''
     if form.validate_on_submit():
         email = form.email.data
         password = form.password.data
-        user = User.query.filter_by(email=email).first()
-        if not user:
-            mess = 'Email not found'
-        else:
-            if check_password_hash(user.password, password):
-                login_user(user, remember=True)
+        email_chk = User.query.filter_by(email=email).first()
+        username_chk = User.query.filter_by(username=email).first()
+        if email_chk or username_chk:
+            if check_password_hash(email_chk.password, password) or check_password_hash(username_chk, password):
+                login_user(email_chk, remember=True)
                 return redirect(url_for('home'))
             else:
                 mess = 'Incorrect password.'
-    return render_template('login.html', mess=mess, form=form)
+    return render_template('dist/login.html', mess=mess, form=form)
 
 @app.route('/logout')
 @login_required

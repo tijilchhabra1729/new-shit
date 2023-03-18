@@ -1,6 +1,6 @@
 from app import db, create_db
 from dump import mainstreet, dawntown, superkicks, crepdog
-# from hack.models import Sneaker, Company, Size, Price
+from hack.models import Sneaker, Size
 import sqlite3
 from functools import reduce
 
@@ -38,20 +38,23 @@ def convert_tuple(t):
         
 # # reduce(all_sneakers)
     
-cur.execute("SELECT * FROM sneaker \
-               GROUP BY name \
-               HAVING COUNT(*) > 1;")
+cur.execute('''SELECT * FROM sneaker WHERE name LIKE "%chicago lost & found%"''')
  
 # fetch duplicate rows and display them
-print('Duplicate Rows:')              
-for i in cur.fetchall():
-   query = "DELETE FROM sneaker WHERE name = '?'"
-   query.replace('?', i[1])
-   cur.execute(query)
-   print('donee')
+alike_sneakers = []
+# query = 'chicago lost and found'
+# cur.execute('SELECT * FROM sneaker')
+# snkrs = cur.fetchall()
+# for i in range(len(snkrs)):
+#     for j in range(i+1, len(snkrs)):
+#         print(snkrs[i][1], snkrs[j][1])
 
+fetched = cur.fetchall()
+for i in fetched:
+   alike_sneakers.append(i)
 
-
+print(alike_sneakers)
+print(len(alike_sneakers))
 # cur.executemany("DELETE FROM sneaker WHERE name = '?'",)
 
 

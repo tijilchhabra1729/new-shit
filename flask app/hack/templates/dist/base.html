@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{url_for('static', filename='css/output.css')}}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap" rel="stylesheet">
+    <title>{% block title %}
+        
+    {% endblock %} - Sole Savings</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap" rel="stylesheet">
+    <Style>
+        @font-face {
+            font-family: Heater;
+            src: url('Heaters.ttf') format('truetype');
+        }
+
+        brush {
+
+            font-family: 'Heater', sans-serif;
+
+        }
+    </Style>
+</head>
+
+<body style="overflow-x: hidden;">
+
+    <header class="bg-white" style="font-family: 'Questrial', sans-serif;">
+        <nav class="z-10 w-full">
+            <div class="container mx-auto px-8 md:px-12 lg:px-6">
+                <div class="relative flex flex-wrap items-center justify-between gap-6 py-2 md:gap-0 md:py-4">
+                    <input aria-hidden="true" type="checkbox" name="toggle_nav" id="toggle_nav" class="peer hidden" />
+                    <div class="relative z-20 flex w-full justify-between md:px-0 lg:w-max">
+                        <a href="#" aria-label="logo" class="flex items-center space-x-2">
+
+                            <span class="text-2xl font-bold text-gray-900 ">Sole Savings</span>
+                        </a>
+                        <div class="relative flex max-h-10 items-center lg:hidden">
+                            <label role="button" for="toggle_nav" aria-label="humburger" id="hamburger"
+                                class="relative -mr-6 p-6">
+                                <div aria-hidden="true" id="line"
+                                    class="m-auto h-0.5 w-5 rounded bg-sky-900 transition duration-300 ">
+                                </div>
+                                <div aria-hidden="true" id="line2"
+                                    class="m-auto mt-2 h-0.5 w-5 rounded bg-sky-900 transition duration-300 ">
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <label aria-hidden="true" for="toggle_nav"
+                        class="fixed inset-0 z-10 h-screen w-screen origin-bottom scale-y-0 bg-white/70 backdrop-blur-2xl transition duration-500 peer-checked:origin-top peer-checked:scale-y-100  lg:hidden"></label>
+                    <div
+                        class="invisible absolute top-full left-0 z-20 w-full origin-top translate-y-1 scale-95 flex-col flex-wrap justify-end gap-6 rounded-3xl border border-gray-100 bg-white p-8 opacity-0 shadow-2xl shadow-red-900/10  transition-all duration-300 peer-checked:visible peer-checked:scale-100 peer-checked:opacity-100  lg:visible lg:relative lg:flex lg:w-7/12 lg:translate-y-0 lg:scale-100 lg:flex-row lg:items-center lg:gap-0 lg:border-none lg:bg-transparent lg:p-0 lg:opacity-100 lg:shadow-none lg:peer-checked:translate-y-0">
+                        <div class="w-full text-gray-600  lg:w-auto lg:pr-4 lg:pt-0">
+                            <ul class="flex flex-col gap-6 font-medium tracking-wide lg:flex-row lg:gap-0 lg:text-sm">
+                                <li>
+                                    <a href="/" class="block transition hover:text-primary md:px-4">
+                                        <span>Home</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/about" class="block transition hover:text-primary md:px-4">
+                                        <span>About</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/search" class="block transition hover:text-primary md:px-4">
+                                        <span>Explore</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <div class="mt-12 lg:mt-0">
+                                {% if not current_user.is_authenticated %}
+                                <button
+                                class="h-10 w-32 rounded-full border-2 border-gray-500 flex flex-cols justify-center items-center hover:bg-gray-200">
+                                <a href="/signin"
+                                class="relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max">
+                                <span class="relative text-sm font-semibold">Sign in</span>
+                            </a></button>
+                                {% else %}
+                                <button
+                                class="h-10 w-48 rounded-full border-2 border-gray-500 flex flex-cols justify-center items-center hover:bg-gray-200">
+                                <a href="/logout"
+                                class="relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max">
+                                <span class="relative text-sm font-semibold">Logout, {{current_user.username}}</span>
+                            </a></button>
+                                {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    {% block content %}
+        
+    {% endblock %}
+</body>
+
+</html>
