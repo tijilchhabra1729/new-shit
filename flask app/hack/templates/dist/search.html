@@ -3,16 +3,18 @@
     Search
 {% endblock %}
 {% block content %}
-<div class="flex flex-cols justify-center items-center h-screen " style="font-family: 'Tilt Neon', cursive;">
-    <div class="text-[13vw] text-red-200 lg:md:block hidden">FIND YOUR KICKS</div>
-    <div class="lg:md:flex lg:md:flex-cols lg:md:gap-10  gap-5 grid grid-rows flex flex-cols justify-center items-center absolute">
-        <form action="/sendsearch" method="post">
-            {{form.hidden_tag()}}
-            {{form.csrf_token}}
+<form action="/sendsearch" method="post">
+    <div class="flex flex-cols justify-center items-center h-screen">
+        <div class="text-[20vw] text-red-200 lg:md:block hidden" style="font-family: heaters, Questrial;">FIND YOUR KICKS</div>
+        <div class="lg:md:flex lg:md:flex-cols lg:md:gap-10  gap-5 grid grid-rows flex flex-cols justify-center items-center absolute">
             {{form.query(class='h-12 backdrop-blur-sm bg-white lg:md:w-[50vw] w-[70vw] border-2 border-black rounded-full p-5 text-xl', placeholder='We are listening...')}}
+    
             <div class="flex flex-cols justify-center items-center">
-                {{form.submit(class='h-12 w-40 bg-black text-white text-xl flex flex-cols justify-center items-center rounded-full')}}</div>
-        </form>
+                <button
+            class="h-12 w-40 bg-black text-white text-xl flex flex-cols justify-center items-center rounded-full">{{form.submit}}
+            &nbsp;<ion-icon name="search-outline" class="font-bold"></ion-icon></button></div>
+        </div>
     </div>
-</div>
+</form>
+
 {% endblock %}

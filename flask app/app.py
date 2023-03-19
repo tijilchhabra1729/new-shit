@@ -62,8 +62,9 @@ def search(query):
     shoes = []
     form = SearchForm()
     snkrs = Sneaker.query.order_by(Sneaker.price.asc()).all()
+    
     for i in snkrs:
-        if i.name.lower().replace('&', 'and').find(query.lower().replace('&', 'and')) != -1:
+        if i.name.lower().replace('&', 'and').replace(' n ', ' and ').find(query.lower().replace('&', 'and').replace(' n ', ' and ')) != -1:
             if i not in shoes:
                 shoes.append(i)
             else:
@@ -100,9 +101,15 @@ def login():
         password = form.password.data
         email_chk = User.query.filter_by(email=email).first()
         username_chk = User.query.filter_by(username=email).first()
-        if email_chk or username_chk:
-            if check_password_hash(email_chk.password, password) or check_password_hash(username_chk, password):
+        if email_chk:
+            if check_password_hash(email_chk.password, password):
                 login_user(email_chk, remember=True)
+                return redirect(url_for('home'))
+            else:
+                mess = 'Incorrect password.'
+        if username_chk:
+            if check_password_hash(username_chk.password, password):
+                login_user(username_chk, remember=True)
                 return redirect(url_for('home'))
             else:
                 mess = 'Incorrect password.'
